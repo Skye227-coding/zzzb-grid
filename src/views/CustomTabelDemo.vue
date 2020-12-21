@@ -19,7 +19,7 @@ export default {
           'Side': 'Short',
           'CallPut': 'Call',
 
-          // 'CloseOrExpiry': 'Close',
+          'CloseOrExpiry': 'Close',
           'FinalUnderlying': 200,
           'ClosePrice': 212,
           'PremiumType': 'SnowBall',
@@ -31,7 +31,7 @@ export default {
           'Side': 'Short',
           'CallPut': 'Call',
 
-          // 'CloseOrExpiry': 'Close',
+          'CloseOrExpiry': 'Close',
           'FinalUnderlying': 188.25,
           'ClosePrice': 212,
           'PremiumType': 'FowardSwap',
@@ -43,7 +43,7 @@ export default {
           'Side': 'Short',
           'CallPut': 'Call',
 
-          // 'CloseOrExpiry': 'Close',
+          'CloseOrExpiry': 'Close',
           'FinalUnderlying': 188.25,
           'ClosePrice': 212,
           'PremiumType': 'FowardSwap',
@@ -55,7 +55,7 @@ export default {
           'Side': 'Short',
           'CallPut': 'Call',
 
-          // 'CloseOrExpiry': 'Close',
+          'CloseOrExpiry': 'Close',
           'FinalUnderlying': 189.25,
           'ClosePrice': 212,
           'PremiumType': 'FowardSwap',
@@ -67,7 +67,7 @@ export default {
           'Side': 'Short',
           'CallPut': 'Call',
 
-          // 'CloseOrExpiry': 'Close',
+          'CloseOrExpiry': 'Close',
           'FinalUnderlying': 189.25,
           'ClosePrice': 212,
           'PremiumType': 'FowardSwap',
@@ -79,7 +79,7 @@ export default {
           'Side': 'Short',
           'CallPut': 'Call',
 
-          // 'CloseOrExpiry': 'Close',
+          'CloseOrExpiry': 'Close',
           'FinalUnderlying': 200.25,
           'ClosePrice': 212,
           'PremiumType': 'FowardSwap',
@@ -91,7 +91,7 @@ export default {
           'Side': 'Short',
           'CallPut': 'Call',
 
-          // 'CloseOrExpiry': 'Close',
+          'CloseOrExpiry': 'Close',
           'FinalUnderlying': 189.25,
           'ClosePrice': 212,
           'PremiumType': 'SnowBall',
@@ -103,7 +103,7 @@ export default {
           'Side': 'Short',
           'CallPut': 'Call',
 
-          // 'CloseOrExpiry': 'Close',
+          'CloseOrExpiry': 'Close',
           'FinalUnderlying': 200.25,
           'ClosePrice': 212,
           'PremiumType': 'FowardSwap',
@@ -115,7 +115,7 @@ export default {
           'Side': 'Short',
           'CallPut': 'Call',
 
-          // 'CloseOrExpiry': 'Close',
+          'CloseOrExpiry': 'Close',
           'FinalUnderlying': 189.25,
           'ClosePrice': 212,
           'PremiumType': 'SnowBall',
@@ -127,7 +127,7 @@ export default {
           'Side': 'Short',
           'CallPut': 'Call',
 
-          // 'CloseOrExpiry': 'Close',
+          'CloseOrExpiry': 'Close',
           'FinalUnderlying': 200.25,
           'ClosePrice': 212,
           'PremiumType': 'FowardSwap',
