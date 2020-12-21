@@ -135,10 +135,10 @@
           <zzzb-input size="mini" v-else-if="colHeader.Type == 'Underlying'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly"></zzzb-input>
           <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageValue'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly"></zzzb-input>
           <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageInput'" :type="colHeader.Type" :fixed="colHeader.Fixed" v-model="obj[colHeader.Prop]" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly"></zzzb-input>
-          <el-select size="mini" v-else-if="colHeader.Type == 'Select'" v-model="obj[colHeader.Prop]" popper-class="pricing-popper" :disabled="colHeader.ReadOnly">
+          <el-select size="mini" v-else-if="colHeader.Type == 'Select'" v-model="obj[colHeader.Prop]" popper-class="zzzb-popper" :disabled="colHeader.ReadOnly">
             <el-option v-for="item in colHeader.Options" :key="item.value" :value="item.label"></el-option>
           </el-select>
-          <el-date-picker size="mini" v-else-if="colHeader.Type == 'Date'" v-model="obj[colHeader.Prop]" popper-class="pricing-popper" :readonly="colHeader.ReadOnly"></el-date-picker>
+          <el-date-picker size="mini" v-else-if="colHeader.Type == 'Date'" v-model="obj[colHeader.Prop]" popper-class="zzzb-popper" :readonly="colHeader.ReadOnly"></el-date-picker>
           <table v-if="rightMenuShow['row_'+Rid]['col_'+Cid]==true" class="right-menu-table" key="right_menu">
             <tr>
               <td @click="insertEmptData('0')">上方插入一行</td>
