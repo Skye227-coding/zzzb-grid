@@ -1,7 +1,7 @@
 <template>
   <div class="zzzb-input">
     <input v-if="readonly" class="zzzb-input__inner" v-bind:value="formatValue" :readonly="readonly" ref="input" v-on:input="updatevalue($event.target.value)" />
-    <input v-else class="zzzb-input__inner" v-bind:value="formatValue" :readonly="readonly" ref="input" v-on:input="updatevalue($event.target.value)" v-on:blur="onBlur" v-on:focus="selectAll" />
+    <input v-else class="zzzb-input__inner" v-bind:value="formatValue" :readonly="readonly" ref="input" v-on:input="updatevalue($event.target.value)" @blur="onBlur" @focus="selectAll" />
 
     <!-- <input class="el-input__inner" v-bind:value="formatValue" :readonly="readonly" ref="input" v-on:input="updatevalue($event.target.value)" v-on:blur="onBlur" v-on:focus="selectAll" /> -->
   </div>
@@ -49,8 +49,8 @@ export default {
   // },
   computed: {
     formatValue() {
-      // console.log("value before :",this.value);
-      // console.log('formatValue', this.focused)
+      console.log("value before :",this.value);
+      console.log('formatValue', this.focused);
       if (this.value === '')
        { return this.value }
       // 焦点在这就返回原始值
@@ -121,9 +121,9 @@ export default {
       // this.dispatch('ElFormItem', 'el.form.blur', [this.value])
     },
     selectAll(event) {
-      // console.log('selectAll')
+
       this.focused = true
-      // console.log(event.target)
+     
       setTimeout(() => {
         event.target.select()
       }, 10)

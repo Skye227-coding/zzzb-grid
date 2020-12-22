@@ -148,7 +148,7 @@ export default {
         { Prop: 'PremiumType', Name: '期权费类型', Type: 'Input', ReadOnly: true, GroupOrder: 2, FieldOrder: 4 },
         { Prop: 'HedgeVol', Name: '对冲波动率', Type: 'PercentageInput', Fixed: 4, ReadOnly: false, GroupOrder: 5, FieldOrder: 1, Sortable: true }
       ],
-      tableDirection: '0'
+      tableDirection: '1'
     }
   },
   components: {
