@@ -2,7 +2,7 @@
   <div>
     <p>Custom tabel</p>
     <div >
-      <table class="zzzb-table">
+      <table class="zzzb-table config-table">
         <tr v-for="(item,index) in zzzbTableConfig" :key="index">
           <td class="zzzb-row-header">
             {{item.Name}}
@@ -15,8 +15,12 @@
         </tr>
       </table>
     </div>
-    <button @click="ClickDD">转置</button>
-    <zzzb-grid :colHeaders='zzzbTableConfig' :data='customData' :direction='tableDirection'></zzzb-grid>
+    <div>
+     <button @click="ClickDD">转置</button>
+    </div>
+    <div class="table-comp">
+      <zzzb-grid :colHeaders='zzzbTableConfig' :data='customData' :direction='tableDirection'></zzzb-grid>
+    </div>
   </div>
 </template>
 

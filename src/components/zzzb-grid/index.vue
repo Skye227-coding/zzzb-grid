@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mytable">
     <table v-if="direction=='0'" border="0" cellspacing="0" class="zzzb-table" id="hor-table">
       <!-- 这里是表头在第一列的表-->
       <tr v-for="(colHeader, Rid) in optionConfig" :key="Rid + '_row'">

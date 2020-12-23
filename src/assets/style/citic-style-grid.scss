@@ -17,6 +17,7 @@ $citicRed:rgb(216, 31, 47);
   background-color: $backGroundColor;
   height: $heght;
   overflow-y: auto;
+  margin:0 auto;
 
   .zzzb-row-header {
     color: rgb(230, 224, 221);
@@ -181,5 +182,18 @@ $citicRed:rgb(216, 31, 47);
 .el-select-dropdown__item{
   list-style: none;
 }
+.table-comp{
+    position: absolute;
+    margin: auto;
+   
+
+}
+.mytable{
+  display: inline-block;
+  width:1500px;
+  margin: 0 auto;
+}
+
+
 
 
