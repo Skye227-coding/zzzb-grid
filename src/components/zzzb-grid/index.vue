@@ -46,15 +46,15 @@
             <el-option v-for="item in colHeader.HeaderOptions" :key="item.value" :value="item.value" :label="item.label"></el-option>
           </el-select>
         </td>
-        <td class="zzzb-row-data" v-for="(obj, Cid) in viewOptions" :key="Cid + '_col'" @contextmenu.prevent="openMenu(Cid,Rid)">
+        <td class="zzzb-row-data" v-for="(obj, Cid) in viewOptions" :key="Cid + '_col'" @contextmenu.prevent="openMenu(Cid,Rid)" tabindex="-1" @keydown="changeFocus($event,Rid,Cid)">
           <i v-if="obj[colHeader.Prop] === undefined" disabled="true" class="el-icon-remove-outline"></i>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Input'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" @keydown.native="changeFocus($event,Rid,Cid)"></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'NumberInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" @keydown.native="changeFocus($event,Rid,Cid)"></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'ThousandthInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" @keydown.native="changeFocus($event,Rid,Cid)"></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Underlying'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" @keydown.native="changeFocus($event,Rid,Cid)"></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageValue'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" @keydown.native="changeFocus($event,Rid,Cid)"></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Input'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" ></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'NumberInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" ></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'ThousandthInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly"></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Underlying'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" ></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageValue'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" ></zzzb-input>
           <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageInput'" :type="colHeader.Type" :fixed="colHeader.Fixed" v-model="obj[colHeader.Prop]" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" @keydown.native="changeFocus($event,Rid,Cid)"></zzzb-input>
-          <el-select size="mini" v-else-if="colHeader.Type == 'Select'" v-model="obj[colHeader.Prop]" popper-class="zzzb-popper" :disabled="colHeader.ReadOnly" @keydown.native="changeFocus($event,Rid,Cid)">
+          <el-select size="mini" v-else-if="colHeader.Type == 'Select'" v-model="obj[colHeader.Prop]" popper-class="zzzb-popper" :disabled="colHeader.ReadOnly">
             <el-option v-for="item in colHeader.Options" :key="item.value" :value="item.value" :label="item.label"></el-option>
           </el-select>
           <el-date-picker size="mini" v-else-if="colHeader.Type == 'Date'" v-model="obj[colHeader.Prop]" popper-class="zzzb-popper" :readonly="colHeader.ReadOnly"></el-date-picker>
@@ -127,15 +127,15 @@
         </td>
       </tr>
       <tr v-for="(obj, Rid) in viewOptions" :key="Rid+'_row'">
-        <td class="zzzb-row-data" v-for="(colHeader, Cid) in colHeaders" :key="Cid + '_col'" @contextmenu.prevent="openMenu(Rid,Cid)">
+        <td class="zzzb-row-data" v-for="(colHeader, Cid) in colHeaders" :key="Cid + '_col'" @contextmenu.prevent="openMenu(Rid,Cid)" tabindex="-1" @keydown="changeFocus($event,Rid,Cid)">
           <i v-if="obj[colHeader.Prop] === undefined" disabled="true" class="el-icon-remove-outline"></i>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Input'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" @keydown.native="changeFocus($event,Rid,Cid)"></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'NumberInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" @keydown.native="changeFocus($event,Rid,Cid)"></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'ThousandthInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" @keydown.native="changeFocus($event,Rid,Cid)"></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Underlying'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" @keydown.native="changeFocus($event,Rid,Cid)"></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageValue'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" @keydown.native="changeFocus($event,Rid,Cid)"></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageInput'" :type="colHeader.Type" :fixed="colHeader.Fixed" v-model="obj[colHeader.Prop]" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" @keydown.native="changeFocus($event,Rid,Cid)"></zzzb-input>
-          <el-select size="mini" v-else-if="colHeader.Type == 'Select'" v-model="obj[colHeader.Prop]" popper-class="zzzb-popper" :disabled="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" @keydown.native="changeFocus($event,Rid,Cid)">
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Input'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'NumberInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'ThousandthInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Underlying'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageValue'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageInput'" :type="colHeader.Type" :fixed="colHeader.Fixed" v-model="obj[colHeader.Prop]" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
+          <el-select size="mini" v-else-if="colHeader.Type == 'Select'" v-model="obj[colHeader.Prop]" popper-class="zzzb-popper" :disabled="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" >
             <el-option v-for="item in colHeader.Options" :key="item.value" :value="item.value"></el-option>
           </el-select>
           <el-date-picker size="mini" v-else-if="colHeader.Type == 'Date'" v-model="obj[colHeader.Prop]" popper-class="zzzb-popper" :readonly="colHeader.ReadOnly"></el-date-picker>
@@ -459,17 +459,17 @@ export default {
       }else{
         objBefore=document.getElementById(tableId).rows[row].cells[col+1];
       }
-      
-      var inputBefore=objBefore.getElementsByClassName("zzzb-input__inner")[0]
-      // var objBefore=this.$refs[oldRef];
+      objBefore.blur();
+      // var inputBefore=objBefore.getElementsByClassName("zzzb-input__inner")[0]
+      // // var objBefore=this.$refs[oldRef];
 
-      console.log("Before:",inputBefore);
-      console.log("row:",row,"col:",col);
-      var event=new Event('blur',{
-        bubbles:true,
-        cancelable:true
-      });
-      inputBefore.dispatchEvent(event);
+      // console.log("Before:",inputBefore);
+      // console.log("row:",row,"col:",col);
+      // var event=new Event('blur',{
+      //   bubbles:true,
+      //   cancelable:true
+      // });
+      // inputBefore.dispatchEvent(event);
      
       // console.log("objBefore:",objBefore);
       // console.log(this.$refs);
@@ -509,15 +509,16 @@ export default {
       }else{
         objAfter=document.getElementById(tableId).rows[row].cells[col+1];
       }
-      var inputAfter=objAfter.getElementsByClassName("zzzb-input__inner")[0];
-      console.log("row:",row,"col:",col);
-      console.log("After:",inputAfter);
-      var event2=new Event('focus',{
-        bubbles:true,
-        cancelable:true
-      });
-      inputAfter.dispatchEvent(event2);
-      // objAfter.focus();
+      objAfter.focus();
+      // var inputAfter=objAfter.getElementsByClassName("zzzb-input__inner")[0];
+      // console.log("row:",row,"col:",col);
+      // console.log("After:",inputAfter);
+      // var event2=new Event('focus',{
+      //   bubbles:true,
+      //   cancelable:true
+      // });
+      // inputAfter.dispatchEvent(event2);
+      // // objAfter.focus();
       // objAfter.fireEvent('focus');
       // newRef='input_'+row+'_'+col;
       // console.log('input_'+row+'_'+col,this.$refs[newRef][0]);
