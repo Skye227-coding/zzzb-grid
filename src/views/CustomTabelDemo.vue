@@ -1,6 +1,20 @@
 <template>
   <div>
     <p>Custom tabel</p>
+    <div >
+      <table class="zzzb-table">
+        <tr v-for="(item,index) in zzzbTableConfig" :key="index">
+          <td class="zzzb-row-header">
+            {{item.Name}}
+          </td>
+          <td class="zzzb-row-data">
+            <span >是否只读：</span>
+            <input type="checkbox" v-model="item.ReadOnly" :value="item.ReadOnly" id="readonly">
+            <label for="readonly">只读</label>
+          </td>
+        </tr>
+      </table>
+    </div>
     <button @click="ClickDD">转置</button>
     <zzzb-grid :colHeaders='zzzbTableConfig' :data='customData' :direction='tableDirection'></zzzb-grid>
   </div>

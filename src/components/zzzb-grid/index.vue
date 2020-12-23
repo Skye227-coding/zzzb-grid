@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>{{direction}}</p>
     <table v-if="direction=='0'" border="0" cellspacing="0" class="zzzb-table" id="hor-table">
       <!-- 这里是表头在第一列的表-->
       <tr v-for="(colHeader, Rid) in optionConfig" :key="Rid + '_row'">
@@ -350,6 +349,7 @@ export default {
       this.location['col']=Cid;
       var rowKey='row_'+this.location['row']
       var colKey='col_'+this.location['col'];
+      this.setRightmenu();
       this.rightMenuShow[rowKey][colKey]=true;
       console.log("Rid:",rowKey,"Cid",colKey);
       console.log("激活了这个右菜单：",this.rightMenuShow[rowKey][colKey]);
@@ -363,12 +363,6 @@ export default {
       var newOption=option;
       return newOption;
     },
-    // createNewProp(propName){
-    //   //  { Prop: 'TradeID', Name: '交易编号', Type: 'Input', ReadOnly: true, GroupOrder: 1, FieldOrder: 22 }
-    //   var newProp={};
-    //   newProp[Prop]=propName;
-
-    // },
     refreshData(){
       this.viewOptions=[];
       for (var Key in this.optionInput){
@@ -460,22 +454,6 @@ export default {
         objBefore=document.getElementById(tableId).rows[row].cells[col+1];
       }
       objBefore.blur();
-      // var inputBefore=objBefore.getElementsByClassName("zzzb-input__inner")[0]
-      // // var objBefore=this.$refs[oldRef];
-
-      // console.log("Before:",inputBefore);
-      // console.log("row:",row,"col:",col);
-      // var event=new Event('blur',{
-      //   bubbles:true,
-      //   cancelable:true
-      // });
-      // inputBefore.dispatchEvent(event);
-     
-      // console.log("objBefore:",objBefore);
-      // console.log(this.$refs);
-      // console.log(oldRef,this.$refs[oldRef][0]);
-      // this.$refs[oldRef][0].fireEvent('blur');
-      // console.log(oldRef,this.$refs[oldRef][0]);
       switch(code){
         // 左
         case 37:
@@ -510,22 +488,6 @@ export default {
         objAfter=document.getElementById(tableId).rows[row].cells[col+1];
       }
       objAfter.focus();
-      // var inputAfter=objAfter.getElementsByClassName("zzzb-input__inner")[0];
-      // console.log("row:",row,"col:",col);
-      // console.log("After:",inputAfter);
-      // var event2=new Event('focus',{
-      //   bubbles:true,
-      //   cancelable:true
-      // });
-      // inputAfter.dispatchEvent(event2);
-      // // objAfter.focus();
-      // objAfter.fireEvent('focus');
-      // newRef='input_'+row+'_'+col;
-      // console.log('input_'+row+'_'+col,this.$refs[newRef][0]);
-      // this.$refs[newRef][0].fireEvent('focus');
-      // console.log('input_'+row+'_'+col,this.$refs[newRef][0]);
-      
-      // this.$refs.newRef.focus();
       ev.preventDefault();
       
       
