@@ -6,6 +6,7 @@ $backGroundColorHover: rgb(40, 52, 67);
 $fontColor: rgb(255, 114, 37);
 $fontColorReadOnly: rgb(75, 73, 73);
 $heght: 25px;
+$citicRed:rgb(216, 31, 47);
 
 .zzzb-table {
   border: 0px solid;
@@ -124,7 +125,7 @@ $heght: 25px;
 
 .zzzb-popper .el-select-dropdown__item.hover,
 .zzzb-popper .el-select-dropdown__item:hover {
-  background: $backGroundColorHover;
+  background: $citicRed;
 }
 
 .zzzb-popper .el-picker-panel__content {
@@ -167,28 +168,9 @@ $heght: 25px;
   position:absolute;
   float:right;
   margin:10px 0px 0px 100px;
-  color:black;
-  background-color: white;
+  color:$fontColorReadOnly;
+  background-color:$backGroundColor;
+  border:1px solid $citicRed;
 }
-// .zzzb-input{
-//   border: 0px solid;
-//   text-align: center;
-//   font-size: 12px;
-//   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-//   background-color: $backGroundColor;
-//   height: $heght;
-//   width: 100%;
-//   border: solid $borderColor 0px;
-//   height: $heght;
-//   font-size: 12px;
-//   .__inner{
-//     color: $fontColor !important;
-//     background-color: $backGroundColor;
-//     border: solid $borderColor 0px;
-//     text-align: center;
-//     padding: 0px !important;
-//     height: $heght;
 
-//   }
 
-// }

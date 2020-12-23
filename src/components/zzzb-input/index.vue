@@ -49,8 +49,8 @@ export default {
   // },
   computed: {
     formatValue() {
-      console.log("value before :",this.value);
-      console.log('formatValue', this.focused);
+      // console.log("value before :",this.value);
+      // console.log('formatValue', this.focused);
       if (this.value === '')
        { return this.value }
       // 焦点在这就返回原始值
@@ -84,6 +84,14 @@ export default {
       
     }
   },
+  watch:{
+    readonly(newValue){
+      this.readonly=newValue;
+      console.log("我检测到了input组件里的变化",this.readonly);
+
+    }
+
+  },
   methods: {
     unFixed(num) {
       return num.toString().replace(',', '')
@@ -110,6 +118,7 @@ export default {
       return value
     },
     updatevalue(value) {
+      console.log("更新了数据！");
       // console.log('Update: ' + value)
       // var formatvalue = this.formatValue(value)
       this.$emit('input', value)

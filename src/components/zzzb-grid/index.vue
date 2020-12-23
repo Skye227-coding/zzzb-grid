@@ -45,7 +45,11 @@
             <el-option v-for="item in colHeader.HeaderOptions" :key="item.value" :value="item.value" :label="item.label"></el-option>
           </el-select>
         </td>
-        <td class="zzzb-row-data" v-for="(obj, Cid) in viewOptions" :key="Cid + '_col'" @contextmenu.prevent="openMenu(Cid,Rid)" tabindex="-1" @keydown="changeFocus($event,Rid,Cid)">
+        <td class="zzzb-row-data" v-for="(obj, Cid) in viewOptions" :key="Cid + '_col'" @contextmenu.prevent="openMenu(Cid,Rid)" tabindex="-1" 
+          @keydown.left="changeFocus($event,Rid,Cid,'37')"
+          @keydown.up="changeFocus($event,Rid,Cid,'38')"
+          @keydown.right="changeFocus($event,Rid,Cid,'39')"
+          @keydown.down="changeFocus($event,Rid,Cid,'40')">
           <i v-if="obj[colHeader.Prop] === undefined" disabled="true" class="el-icon-remove-outline"></i>
           <zzzb-input size="mini" v-else-if="colHeader.Type == 'Input'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" ></zzzb-input>
           <zzzb-input size="mini" v-else-if="colHeader.Type == 'NumberInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" ></zzzb-input>
@@ -126,7 +130,11 @@
         </td>
       </tr>
       <tr v-for="(obj, Rid) in viewOptions" :key="Rid+'_row'">
-        <td class="zzzb-row-data" v-for="(colHeader, Cid) in colHeaders" :key="Cid + '_col'" @contextmenu.prevent="openMenu(Rid,Cid)" tabindex="-1" @keydown="changeFocus($event,Rid,Cid)">
+        <td class="zzzb-row-data" v-for="(colHeader, Cid) in colHeaders" :key="Cid + '_col'" @contextmenu.prevent="openMenu(Rid,Cid)" tabindex="-1" 
+          @keydown.left="changeFocus($event,Rid,Cid,'37')"
+          @keydown.up="changeFocus($event,Rid,Cid,'38')"
+          @keydown.right="changeFocus($event,Rid,Cid,'39')"
+          @keydown.down="changeFocus($event,Rid,Cid,'40')">
           <i v-if="obj[colHeader.Prop] === undefined" disabled="true" class="el-icon-remove-outline"></i>
           <zzzb-input size="mini" v-else-if="colHeader.Type == 'Input'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
           <zzzb-input size="mini" v-else-if="colHeader.Type == 'NumberInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
@@ -139,17 +147,20 @@
           </el-select>
           <el-date-picker size="mini" v-else-if="colHeader.Type == 'Date'" v-model="obj[colHeader.Prop]" popper-class="zzzb-popper" :readonly="colHeader.ReadOnly"></el-date-picker>
           <table v-if="rightMenuShow['row_'+Rid]['col_'+Cid]==true" class="right-menu-table" key="right_menu">
-            <tr>
-              <td @click="insertEmptData('0')">上方插入一行</td>
+            <tr class="right-menu-tr">
+              <td  @click="insertEmptData('0')">上方插入一行</td>
             </tr>
-            <tr>
+            <tr class="right-menu-tr">
               <td @click="insertEmptData('1')">下方插入一行</td>
             </tr>
-            <tr>
+            <tr class="right-menu-tr">
               <td @click="insertEmptProp('0')">左侧插入一列</td>
             </tr>
-            <tr>
+            <tr class="right-menu-tr">
               <td @click="insertEmptProp('1')">右侧插入一列</td>
+            </tr>
+            <tr class="right-menu-tr">
+              <td @click="setRightmenu">Cancle</td>
             </tr>
           </table>
         </td>
@@ -193,8 +204,10 @@ export default {
     this.refresh()
   },
   watch: {
-    config(newValue) {
-      this.config = newValue;
+    colHeaders(newValue) {
+      this.colHeaders = newValue;
+      this.optionConfig=newValue;
+      console.log("config change!",newValue);
     },
     checkedValue:function(){
       if(this.checkedValue.size==this.distinctNum){
@@ -212,6 +225,9 @@ export default {
       this.filterShow = newValue;
     },
   },
+  computed:{
+
+  },
   methods: {
     // 从外部注入的数据绑定到table里面
     refresh() {
@@ -226,6 +242,8 @@ export default {
       this.viewOptions=[];
       this.optionInput=this.data;
       this.optionConfig=this.colHeaders;
+      console.log("我在refresh里面！");
+      console.log(this.optionConfig);
       for(var optionKey in this.optionInput){
         var option=this.optionInput[optionKey];
         this.viewOptions.push(option);
@@ -432,11 +450,9 @@ export default {
       
 
     },
-    changeFocus(ev,row,col){
-      var code=ev.keyCode;
-      // var oldRef='input_'+row+'_'+col;
-      // var newRef;
-      // var refs=this.$refs;
+    changeFocus(ev,row,col,code){
+      // var code=ev.keyCode;
+      console.log("触发了keydown!");
       var tableId;
       if(this.direction=='1'){
         tableId='vertical-table'; 
@@ -444,9 +460,9 @@ export default {
         tableId='hor-table';
       }
       var row_len=document.getElementById(tableId).rows.length-1;
-      console.log("row len:",row_len);
+      // console.log("row len:",row_len);
       var col_len=document.getElementById(tableId).rows[0].cells.length;
-      console.log("col len:",col_len);
+      // console.log("col len:",col_len);
       var objBefore;
       if(this.direction=='1'){
         objBefore=document.getElementById(tableId).rows[row+1].cells[col];
@@ -456,25 +472,25 @@ export default {
       objBefore.blur();
       switch(code){
         // 左
-        case 37:
+        case '37':
           if(col-1>=0){
             col--;
           }
           break;
         // 向上
-        case 38:
+        case '38':
           if(row-1>=0){
             row--;
           }
           break;
         // 向右
-        case 39:
+        case '39':
           if(col+1<col_len){
             col++;
           }
           break;
         // 向下
-        case 40:
+        case '40':
           if(row+1<row_len){
             row++;
           }
@@ -488,7 +504,7 @@ export default {
         objAfter=document.getElementById(tableId).rows[row].cells[col+1];
       }
       objAfter.focus();
-      ev.preventDefault();
+      // ev.preventDefault();
       
       
     }
