@@ -51,13 +51,13 @@
           @keydown.right="changeFocus($event,Rid,Cid,'39')"
           @keydown.down="changeFocus($event,Rid,Cid,'40')">
           <i v-if="obj[colHeader.Prop] === undefined" disabled="true" class="el-icon-remove-outline"></i>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Input'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" ></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'NumberInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" ></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'ThousandthInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly"></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Underlying'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" ></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageValue'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" ></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageInput'" :type="colHeader.Type" :fixed="colHeader.Fixed" v-model="obj[colHeader.Prop]" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" @keydown.native="changeFocus($event,Rid,Cid)"></zzzb-input>
-          <el-select size="mini" v-else-if="colHeader.Type == 'Select'" v-model="obj[colHeader.Prop]" popper-class="zzzb-popper" :disabled="colHeader.ReadOnly">
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Input'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" @keydown.enter.native="saveChange(Rid,Cid)" @keydown.esc.native="exitEdit(Rid,Cid)"></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'NumberInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" @keydown.enter.native="saveChange(Rid,Cid)" @keydown.esc.native="exitEdit(Rid,Cid)"></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'ThousandthInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" @keydown.enter.native="saveChange(Rid,Cid)" @keydown.esc.native="exitEdit(Rid,Cid)"></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Underlying'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" @keydown.enter.native="saveChange(Rid,Cid)" @keydown.esc.native="exitEdit(Rid,Cid)"></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageValue'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" @keydown.enter.native="saveChange(Rid,Cid)" @keydown.esc.native="exitEdit(Rid,Cid)"></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageInput'" :type="colHeader.Type" :fixed="colHeader.Fixed" v-model="obj[colHeader.Prop]" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" @keydown.enter.native="saveChange(Rid,Cid)" @keydown.esc.native="exitEdit(Rid,Cid)"></zzzb-input>
+          <el-select size="mini" v-else-if="colHeader.Type == 'Select'" v-model="obj[colHeader.Prop]" popper-class="zzzb-popper" :disabled="colHeader.ReadOnly" @keydown.enter.native="saveChange(Rid,Cid)" @keydown.esc.native="exitEdit(Rid,Cid)" >
             <el-option v-for="item in colHeader.Options" :key="item.value" :value="item.value" :label="item.label"></el-option>
           </el-select>
           <el-date-picker size="mini" v-else-if="colHeader.Type == 'Date'" v-model="obj[colHeader.Prop]" popper-class="zzzb-popper" :readonly="colHeader.ReadOnly"></el-date-picker>
@@ -134,16 +134,17 @@
           @keydown.left="changeFocus($event,Rid,Cid,'37')"
           @keydown.up="changeFocus($event,Rid,Cid,'38')"
           @keydown.right="changeFocus($event,Rid,Cid,'39')"
-          @keydown.down="changeFocus($event,Rid,Cid,'40')">
+          @keydown.down="changeFocus($event,Rid,Cid,'40')"
+          >
           <i v-if="obj[colHeader.Prop] === undefined" disabled="true" class="el-icon-remove-outline"></i>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Input'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'NumberInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'ThousandthInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Underlying'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageValue'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageInput'" :type="colHeader.Type" :fixed="colHeader.Fixed" v-model="obj[colHeader.Prop]" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Input'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" @keydown.enter.native="saveChange(Rid,Cid)" @keydown.esc.native="exitEdit(Rid,Cid)"></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'NumberInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" @keydown.enter.native="saveChange(Rid,Cid)" @keydown.esc.native="exitEdit(Rid,Cid)"></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'ThousandthInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" @keydown.enter.native="saveChange(Rid,Cid)" @keydown.esc.native="exitEdit(Rid,Cid)"></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Underlying'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" @keydown.enter.native="saveChange(Rid,Cid)" @keydown.esc.native="exitEdit(Rid,Cid)"></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageValue'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" @keydown.enter.native="saveChange(Rid,Cid)" @keydown.esc.native="exitEdit(Rid,Cid)"></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'PercentageInput'" :type="colHeader.Type" :fixed="colHeader.Fixed" v-model="obj[colHeader.Prop]" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" @keydown.enter.native="saveChange(Rid,Cid)" @keydown.esc.native="exitEdit(Rid,Cid)"></zzzb-input>
           <el-select size="mini" v-else-if="colHeader.Type == 'Select'" v-model="obj[colHeader.Prop]" popper-class="zzzb-popper" :disabled="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" >
-            <el-option v-for="item in colHeader.Options" :key="item.value" :value="item.value"></el-option>
+            <el-option v-for="item in colHeader.Options" :key="item.value" :value="item.value" @keydown.enter.native="saveChange(Rid,Cid)" @keydown.esc.native="exitEdit(Rid,Cid)"></el-option>
           </el-select>
           <el-date-picker size="mini" v-else-if="colHeader.Type == 'Date'" v-model="obj[colHeader.Prop]" popper-class="zzzb-popper" :readonly="colHeader.ReadOnly"></el-date-picker>
           <table v-if="rightMenuShow['row_'+Rid]['col_'+Cid]==true" class="right-menu-table" key="right_menu">
@@ -231,17 +232,19 @@ export default {
   methods: {
     // 从外部注入的数据绑定到table里面
     refresh() {
-      console.log('排序', Object.values(this.optionConfig))
-      this.optionConfig = Object.values(this.optionConfig).sort(function (a, b) {
+      
+      this.viewOptions=[];
+      this.optionInput=this.data;
+      this.optionConfig=this.colHeaders;
+      // 排序：
+      console.log('排序', this.optionConfig)
+      this.optionConfig = this.optionConfig.sort(function (a, b) {
         if (a.GroupOrder === b.GroupOrder) {
           return a.FieldOrder - b.FieldOrder
         } else {
           return a.GroupOrder - b.GroupOrder
         }
       })
-      this.viewOptions=[];
-      this.optionInput=this.data;
-      this.optionConfig=this.colHeaders;
       console.log("我在refresh里面！");
       console.log(this.optionConfig);
       for(var optionKey in this.optionInput){
@@ -507,6 +510,54 @@ export default {
       // ev.preventDefault();
       
       
+    },
+    saveChange(row,col){
+      console.log("进入了保存函数！");
+      var tableId;
+      if(this.direction=='1'){
+        tableId='vertical-table'; 
+      }else{
+        tableId='hor-table';
+      }
+      var objCurrent;
+      if(this.direction=='1'){
+        objCurrent=document.getElementById(tableId).rows[row+1].cells[col];
+      }else{
+        objCurrent=document.getElementById(tableId).rows[row].cells[col+1];
+      }
+      var innerObj=objCurrent.getElementsByClassName("zzzb-input__inner")[0];
+      var event1=new Event('blur',{
+        bubbles:true,
+        cancelable:true
+      });
+      innerObj.dispatchEvent(event1);
+
+      objCurrent.focus();
+      
+    },
+    exitEdit(row,col){
+      console.log("进入了退出函数！");
+      var tableId;
+      if(this.direction=='1'){
+        tableId='vertical-table'; 
+      }else{
+        tableId='hor-table';
+      }
+      // console.log("col len:",col_len);
+      var objCurrent;
+      if(this.direction=='1'){
+        objCurrent=document.getElementById(tableId).rows[row+1].cells[col];
+      }else{
+        objCurrent=document.getElementById(tableId).rows[row].cells[col+1];
+      }
+      var innerObj=objCurrent.getElementsByClassName("zzzb-input__inner")[0];
+      var event2=new Event('blur',{
+        bubbles:true,
+        cancelable:true
+      });
+      innerObj.dispatchEvent(event2);
+      objCurrent.focus();
+
     }
 
 

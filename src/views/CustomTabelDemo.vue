@@ -180,14 +180,6 @@ export default {
       }
     }
   },
-  // mounted() {
-  //   this.DataBind()
-  // },
-  // methods: {
-  //   DataBind() {
-  //     this.$refs['zzzbTable'].optionData = this.customData  //这里的CustomData是外部输入的数据,类似之前的Option
-  //     console.log('dataBind',this.$refs['zzzbTable'].optionData)
-  //   }
-  // },
+  
 }
 </script>
