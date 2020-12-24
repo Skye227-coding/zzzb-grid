@@ -87,7 +87,7 @@ export default {
   watch:{
     readonly(newValue){
       this.readonly=newValue;
-      console.log("我检测到了input组件里的变化",this.readonly);
+      // console.log("我检测到了input组件里的变化",this.readonly);
 
     }
 
