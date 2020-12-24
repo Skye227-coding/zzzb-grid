@@ -441,7 +441,7 @@ export default {
         this.refreshData();
       }else{
         position=this.location['col']+1;
-        let newProp={Prop:'NewProperty',Name:'新属性',Type:'input',ReadOnly:false,GroupOrder:group,FieldOrder:field+1};
+        let newProp={Prop:'NewProperty',Name:'新属性',Type:'Input',ReadOnly:false,GroupOrder:group,FieldOrder:field+1};
         this.optionConfig.splice(position,0,newProp);
         for(let key in this.optionInput){
           this.$set(this.optionInput[key],newProp.Prop,0);
