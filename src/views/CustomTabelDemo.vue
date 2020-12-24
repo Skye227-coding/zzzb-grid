@@ -17,6 +17,11 @@
             <input type="checkbox" v-model="item.Sortable" :value="item.Sortable" id="sortfunc">
             <label for="sortfunc">是</label>
           </td>
+          <td class="zzzb-row-data">
+            <span>过滤器：</span>
+            <input type="checkbox" v-model="item.FilterAddon" :value="item.FilterAddon" id="filterfunc">
+            <label for="filterfunc">是</label>
+          </td>
         </tr>
       </table>
     </div>
@@ -160,16 +165,16 @@ export default {
       ]
       ,
       zzzbTableConfig: [
-        { Prop: 'TradeID', Name: '交易编号', Type: 'Input', ReadOnly: true, GroupOrder: 1, FieldOrder: 22 ,Sortable:false},
-        { Prop: 'LegID', Name: '腿编号', Type: 'Input', ReadOnly: true, GroupOrder: 1, FieldOrder: 2 ,Sortable:false},
-        { Prop: 'Side', Name: '期初开仓方向', Type: 'Select', ReadOnly: true, GroupOrder: 1, FieldOrder: 11, Options: [{ label: '客户买入', value: 'Short' }, { label: '客户卖出', value: 'Long' }] ,Sortable:false},
-        { Prop: 'CallPut', Name: '期权类型', Type: 'Select', ReadOnly: true, GroupOrder: 1, FieldOrder: 12, Options: [{ label: 'Call', value: 'Call' }, { label: 'Put', value: 'Put' }] ,Sortable:false},
+        { Prop: 'TradeID', Name: '交易编号', Type: 'Input', ReadOnly: true, GroupOrder: 1, FieldOrder: 22 ,Sortable:false,FilterAddon:false},
+        { Prop: 'LegID', Name: '腿编号', Type: 'Input', ReadOnly: true, GroupOrder: 1, FieldOrder: 2 ,Sortable:false,FilterAddon:false},
+        { Prop: 'Side', Name: '期初开仓方向', Type: 'Select', ReadOnly: true, GroupOrder: 1, FieldOrder: 11, Options: [{ label: '客户买入', value: 'Short' }, { label: '客户卖出', value: 'Long' }] ,Sortable:false,FilterAddon:false},
+        { Prop: 'CallPut', Name: '期权类型', Type: 'Select', ReadOnly: true, GroupOrder: 1, FieldOrder: 12, Options: [{ label: 'Call', value: 'Call' }, { label: 'Put', value: 'Put' }] ,Sortable:false,FilterAddon:false},
 
-        { Prop: 'CloseOrExpiry', Name: '平仓/到期', Type: 'Select', ReadOnly: false, GroupOrder: 2, FieldOrder: 1, Options: [{ label: 'Close', value: 'Close' }, { label: 'Expiry', value: 'Expiry' }] ,Sortable:false},
+        { Prop: 'CloseOrExpiry', Name: '平仓/到期', Type: 'Select', ReadOnly: false, GroupOrder: 2, FieldOrder: 1, Options: [{ label: 'Close', value: 'Close' }, { label: 'Expiry', value: 'Expiry' }] ,Sortable:false,FilterAddon:false},
         { Prop: 'FinalUnderlying', Name: '出场价格', Type: 'Input', ReadOnly: false, GroupOrder: 2, FieldOrder: 2, FilterAddon: true ,Sortable:false},
-        { Prop: 'ClosePrice', Name: '平仓/到期单价', Type: 'ThousandthInput', Fixed: 4, Symbol: '￥', SymbolUnit: '元', ReadOnly: false, GroupOrder: 2, FieldOrder: 3 ,Sortable:false},
-        { Prop: 'PremiumType', Name: '期权费类型', Type: 'Input', ReadOnly: true, GroupOrder: 2, FieldOrder: 4 ,Sortable:false},
-        { Prop: 'HedgeVol', Name: '对冲波动率', Type: 'PercentageInput', Fixed: 4, ReadOnly: false, GroupOrder: 5, FieldOrder: 1, Sortable: true }
+        { Prop: 'ClosePrice', Name: '平仓/到期单价', Type: 'ThousandthInput', Fixed: 4, Symbol: '￥', SymbolUnit: '元', ReadOnly: false, GroupOrder: 2, FieldOrder: 3 ,Sortable:false,FilterAddon:false},
+        { Prop: 'PremiumType', Name: '期权费类型', Type: 'Input', ReadOnly: true, GroupOrder: 2, FieldOrder: 4 ,Sortable:false,FilterAddon:false},
+        { Prop: 'HedgeVol', Name: '对冲波动率', Type: 'PercentageInput', Fixed: 4, ReadOnly: false, GroupOrder: 5, FieldOrder: 1, Sortable: true ,FilterAddon:false}
       ],
       tableDirection: '1'
     }

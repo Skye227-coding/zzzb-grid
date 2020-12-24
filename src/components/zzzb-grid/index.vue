@@ -4,20 +4,21 @@
       <!-- 这里是表头在第一列的表-->
       <tr v-for="(colHeader, Rid) in optionConfig" :key="Rid + '_row'">
         <td class="zzzb-row-header">
-          <div v-if="colHeader.Sortable!=true&&colHeader.FilterAddon!=true" style="float:left;">
+          <div style="display:inline;">
             {{ colHeader.Name }}
           </div>
-          <div v-if="colHeader.Sortable==true"  style="float:left; margin:0px;" @click="sortColumnData(colHeader.Prop, optionInput)">
-            {{ colHeader.Name }}
+          <div class="sortIcon" v-if="colHeader.Sortable==true"  @click="sortColumnData(colHeader.Prop, optionInput)">
+            <!-- {{ colHeader.Name }} -->
+            <font-awesome-icon v-show="sortShow[colHeader.Prop]=='original'" :icon="['fas','sort']" />
             <font-awesome-icon v-show="sortShow[colHeader.Prop]=='asce'" :icon="['fas','sort-amount-up']" />
             <font-awesome-icon v-show="sortShow[colHeader.Prop]=='desc'" :icon="['fas','sort-amount-down']"/>
           </div>
-          <div class="filterIcon" style="pointer-events: auto;" v-if="colHeader.FilterAddon==true" @click="findDistinctProp(optionInput, colHeader.Prop)" >
-            {{ colHeader.Name }}
+          <div class="filterIcon" v-if="colHeader.FilterAddon==true" style="pointer-events: auto;"  @click="findDistinctProp(optionInput, colHeader.Prop)" >
+            <!-- {{ colHeader.Name }} -->
             <font-awesome-icon :icon="['fas', 'filter']" />
             <!--显示table：  -->
             <div>
-              <table v-if="filterShow['a']==true" class="filterTable" key="filter-table">
+              <table v-if="filterShow[colHeader.Prop]==true" class="filterTable" key="filter-table">
                 <tr>
                   <td>
                     <input type="checkbox" id="checkbox1"  v-model="selectAll" @change="changeAllChecked(colHeader.Prop)">
@@ -36,7 +37,7 @@
                 </tr>
                 <tr>
                   <td><button @click="filterProp(colHeader.Prop)">OK</button></td>
-                  <td><button @click="cancleQuit()">Cancle</button></td>
+                  <td><button @click="cancleQuit(colHeader.Prop)">Cancle</button></td>
                 </tr>
               </table>
             </div>
@@ -85,7 +86,11 @@
     <table v-else border="0" cellspacing="0" class="zzzb-table" id="vertical-table">
       <tr class="zzzb-row-header">
         <td class="inline-row" v-for="(colHeader, id) in optionConfig" :key="id + '_column'">
-          <div v-if="colHeader.Sortable!=true&&colHeader.FilterAddon!=true">
+          <div>
+
+          </div>
+          <!-- v-if="colHeader.Sortable!=true&&colHeader.FilterAddon!=true" -->
+          <div style="display:inline;" >
             {{ colHeader.Name }}
           </div>
           <el-select v-if="colHeader.HeaderOptions !== undefined" size="mini" style="width: 60px" v-model="colHeader.HeaderProp" popper-class="pricing-popper">
@@ -93,17 +98,18 @@
           </el-select>
           <!-- 这里从optionData父源数据改成了viewOptions -->
           <div class="sortIcon" v-if="colHeader.Sortable==true" @click="sortColumnData(colHeader.Prop,optionInput)">
-            {{ colHeader.Name }}
+            <!-- {{ colHeader.Name }} -->
+            <font-awesome-icon v-show="sortShow[colHeader.Prop]=='original'" :icon="['fas','sort']" />
             <font-awesome-icon v-show="sortShow[colHeader.Prop]=='asce'" :icon="['fas','sort-amount-up']" />
             <font-awesome-icon v-show="sortShow[colHeader.Prop]=='desc'" :icon="['fas','sort-amount-down']" />
           </div>
           <!-- 过滤 -->
-          <div class="filterIcon" style="pointer-events: auto;" v-if="colHeader.FilterAddon==true">
-            {{ colHeader.Name }}
+          <div class="filterIcon" style="pointer-events: auto;" v-if="colHeader.FilterAddon==true" >
+            <!-- {{ colHeader.Name }} -->
             <font-awesome-icon :icon="['fas', 'filter']" @click="findDistinctProp(optionInput,colHeader.Prop)" />
             <!--显示table：  -->
             <div>
-              <table v-if="filterShow['a']==true" class="filterTable" key="filter-table">
+              <table v-if="filterShow[colHeader.Prop]==true" class="filterTable" key="filter-table">
                 <tr>
                   <td>
                     <input type="checkbox" id="checkbox1" v-model="selectAll" @change="changeAllChecked(colHeader.Prop)">
@@ -122,7 +128,7 @@
                 </tr>
                 <tr>
                   <td><button @click="filterProp(colHeader.Prop)">OK</button></td>
-                  <td><button @click="cancleQuit()">Cancle</button></td>
+                  <td><button @click="cancleQuit(colHeader.Prop)">Cancle</button></td>
                 </tr>
               </table>
             </div>
@@ -187,7 +193,7 @@ export default {
       sortKey: '',
       sortType: 'asce',
       sortShow: {},
-      filterShow: { 'a': false },
+      filterShow: { },
       // viewOptioncolHeaderMap: {},
       rightMenuShow:{},
       viewOptions:[],
@@ -224,7 +230,12 @@ export default {
     },
     filterShow: function (newValue) {
       this.filterShow = newValue;
+      console.log("filterShow变了！",newValue);
     },
+    sortShow:function(newValue){
+      this.sortShow=newValue;
+      console.log("sortShow变了！",newValue);
+    }
   },
   computed:{
 
@@ -251,7 +262,7 @@ export default {
         var option=this.optionInput[optionKey];
         this.viewOptions.push(option);
       }
-
+      
       // 为显示右键弹窗的属性赋值
       for(var key in this.optionInput){
         var op=this.optionInput[key];
@@ -266,7 +277,8 @@ export default {
           console.log(this.rightMenuShow[row]['col_'+i]);
         }
       }
-      
+      this.setFilterShow();
+      this.setSortShow();
       // console.log('排序', this.colHeadersSorted)
     },
     sortColumnData(sortKey, options) {
@@ -290,12 +302,23 @@ export default {
       this.sortType = newType;
       this.$set(this.sortShow,sortKey,sortType);
       // this.sortShow = sortType;
-      // console.log("sortShow:", this.sortShow)
+      console.log("sortshow:",this.sortShow[sortKey]);
       this.viewOptions = [];
       // 这里从改动prop的方式改为用本地新数组来渲染
       for (var optionKey in sortedColumn) {
         var option = sortedColumn[optionKey];
         this.viewOptions.push(option);
+      }
+    },
+    // filter表单的初始化
+    setFilterShow(){
+      for(let key in this.optionConfig){
+        this.$set(this.filterShow,this.optionConfig[key]['Prop'],false);
+      }
+    },
+    setSortShow(){
+      for(let key in this.optionConfig){
+          this.$set(this.sortShow,this.optionConfig[key]['Prop'],'original');
       }
     },
     //这里传入optionData和要筛选的prop,得到不重复的prop集合挡在distinct数组里面
@@ -305,12 +328,9 @@ export default {
       for (let item of options) {
         x.add(item[propName]);
       }
-      // this.distinctProp[propName]=x;
       this.$set(this.distinctProp, propName, x)
-      // console.log("distinct Property:", this.distinctProp[propName]);
-      this.filterShow['a'] = true;
+      this.filterShow[propName] = true;
       this.distinctNum = this.distinctProp[propName].size;
-      // console.log("distinct num:", this.distinctNum);
     },
     //过滤器
     filterProp(prop) {
@@ -343,12 +363,12 @@ export default {
 
     },
     // 取消全选
-    cancleQuit() {
+    cancleQuit(propName) {
       this.checkedValue = [];
-      this.filterShow['a'] = false;
+      this.filterShow[propName] = false;
       this.selectAll = false;
       this.cancleAll = false;
-      this.$set(this.filterShow, 'a', false);
+      this.$set(this.filterShow, propName, false);
       this.$forceUpdate();
       console.log("cancel Quit:", this.filterShow);
 
