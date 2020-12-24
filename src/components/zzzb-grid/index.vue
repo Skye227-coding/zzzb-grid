@@ -9,8 +9,8 @@
           </div>
           <div v-if="colHeader.Sortable==true"  style="float:left; margin:0px;" @click="sortColumnData(colHeader.Prop, optionInput)">
             {{ colHeader.Name }}
-            <font-awesome-icon v-show="sortShow=='asce'" :icon="['fas','sort-amount-up']" />
-            <font-awesome-icon v-show="sortShow=='desc'" :icon="['fas','sort-amount-down']"/>
+            <font-awesome-icon v-show="sortShow[colHeader.Prop]=='asce'" :icon="['fas','sort-amount-up']" />
+            <font-awesome-icon v-show="sortShow[colHeader.Prop]=='desc'" :icon="['fas','sort-amount-down']"/>
           </div>
           <div class="filterIcon" style="pointer-events: auto;" v-if="colHeader.FilterAddon==true" @click="findDistinctProp(optionInput, colHeader.Prop)" >
             {{ colHeader.Name }}
@@ -94,8 +94,8 @@
           <!-- 这里从optionData父源数据改成了viewOptions -->
           <div class="sortIcon" v-if="colHeader.Sortable==true" @click="sortColumnData(colHeader.Prop,optionInput)">
             {{ colHeader.Name }}
-            <font-awesome-icon v-show="sortShow=='asce'" :icon="['fas','sort-amount-up']" />
-            <font-awesome-icon v-show="sortShow=='desc'" :icon="['fas','sort-amount-down']" />
+            <font-awesome-icon v-show="sortShow[colHeader.Prop]=='asce'" :icon="['fas','sort-amount-up']" />
+            <font-awesome-icon v-show="sortShow[colHeader.Prop]=='desc'" :icon="['fas','sort-amount-down']" />
           </div>
           <!-- 过滤 -->
           <div class="filterIcon" style="pointer-events: auto;" v-if="colHeader.FilterAddon==true">
@@ -186,7 +186,7 @@ export default {
       // 期权的属性
       sortKey: '',
       sortType: 'asce',
-      sortShow: '',
+      sortShow: {},
       filterShow: { 'a': false },
       // viewOptioncolHeaderMap: {},
       rightMenuShow:{},
@@ -267,7 +267,7 @@ export default {
         }
       }
       
-      console.log('排序', this.colHeadersSorted)
+      // console.log('排序', this.colHeadersSorted)
     },
     sortColumnData(sortKey, options) {
       var sortType = this.sortType
@@ -287,8 +287,9 @@ export default {
           return a['TradeID'] - b['TradeID']
         }
       })
-      this.sortType = newType
-      this.sortShow = sortType
+      this.sortType = newType;
+      this.$set(this.sortShow,sortKey,sortType);
+      // this.sortShow = sortType;
       // console.log("sortShow:", this.sortShow)
       this.viewOptions = [];
       // 这里从改动prop的方式改为用本地新数组来渲染
