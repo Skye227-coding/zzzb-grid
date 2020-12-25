@@ -22,6 +22,16 @@
             <input type="checkbox" v-model="item.FilterAddon" :value="item.FilterAddon" id="filterfunc">
             <label for="filterfunc">是</label>
           </td>
+          <td class="zzzb-row-data box-inner">
+            <span>小组顺序：</span>
+            <input class="inputBox" type="number" v-model.number.lazy="item.GroupOrder" :id="index+'group'" >
+            <button  @click="updateGrid">OK</button>
+          </td>
+          <td class="zzzb-row-data box-inner">
+            <span>组内顺序：</span>
+            <input class="inputBox" type="number" v-model.number.lazy="item.FieldOrder" :id="index+'field'" >
+            <button  @click="updateGrid">OK</button>
+          </td>
         </tr>
       </table>
     </div>
@@ -29,7 +39,7 @@
      <button @click="ClickDD">转置</button>
     </div>
     <div class="table-comp">
-      <zzzb-grid :colHeaders='zzzbTableConfig' :data='customData' :direction='tableDirection'></zzzb-grid>
+      <zzzb-grid :colHeaders='zzzbTableConfig' :data='customData' :direction='tableDirection' :reset='reset'></zzzb-grid>
     </div>
   </div>
 </template>
@@ -176,7 +186,8 @@ export default {
         { Prop: 'PremiumType', Name: '期权费类型', Type: 'Input', ReadOnly: true, GroupOrder: 2, FieldOrder: 4 ,Sortable:false,FilterAddon:false},
         { Prop: 'HedgeVol', Name: '对冲波动率', Type: 'PercentageInput', Fixed: 4, ReadOnly: false, GroupOrder: 5, FieldOrder: 1, Sortable: true ,FilterAddon:false}
       ],
-      tableDirection: '1'
+      tableDirection: '1',
+      reset:false
     }
   },
   components: {
@@ -192,8 +203,14 @@ export default {
         this.tableDirection = "0";
         console.log("direction:",this.tableDirection);
       }
+    },
+    updateGrid(){
+      this.reset=true;
     }
   },
+  watch:{
+    
+  }
   
 }
 </script>

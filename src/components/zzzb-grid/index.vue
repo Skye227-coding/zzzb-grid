@@ -185,7 +185,7 @@ export default {
   components: {
     zzzbInput
   },
-  props: ['colHeaders', 'data', 'direction'],
+  props: ['colHeaders', 'data', 'direction','reset'],
   data() {
     return {
       key: 1,
@@ -216,6 +216,22 @@ export default {
       this.optionConfig=newValue;
       console.log("config change!",newValue);
     },
+    // colHeaders:{
+    //   handler(newValue){
+    //     this.colHeaders = newValue;
+    //     this.optionConfig=newValue;
+    //     this.optionConfig = this.optionConfig.sort(function (a, b) {
+    //       if (a.GroupOrder === b.GroupOrder) {
+    //         return a.FieldOrder - b.FieldOrder
+    //         } else {
+    //         return a.GroupOrder - b.GroupOrder
+    //         }
+    //      })
+    //     console.log("我在深度监听里面！");
+    //     console.log(this.optionConfig);
+    //   },
+    //   deep:true
+    // },
     checkedValue:function(){
       if(this.checkedValue.size==this.distinctNum){
         this.selectAll=true;
@@ -230,11 +246,25 @@ export default {
     },
     filterShow: function (newValue) {
       this.filterShow = newValue;
-      console.log("filterShow变了！",newValue);
+      // console.log("filterShow变了！",newValue);
     },
     sortShow:function(newValue){
       this.sortShow=newValue;
-      console.log("sortShow变了！",newValue);
+      // console.log("sortShow变了！",newValue);
+    },
+    // 监听从外部传过来的reset如果是true就重新排列我们的表头
+    reset:function(){
+      if(this.reset==true){
+        this.optionConfig = this.optionConfig.sort(function (a, b) {
+          if (a.GroupOrder === b.GroupOrder) {
+            return a.FieldOrder - b.FieldOrder
+            } else {
+            return a.GroupOrder - b.GroupOrder
+            }
+         })
+         console.log("更新了表格！");
+         console.log(this.optionConfig);
+      }
     }
   },
   computed:{
