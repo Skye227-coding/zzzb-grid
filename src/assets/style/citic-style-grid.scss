@@ -187,11 +187,9 @@ $citicRed:rgb(216, 31, 47);
 
 }
 .mytable{
-  display: inline-block;
-  width:1500px;
-  margin: 0 auto;
-  // margin-left: calc(100vw - 100%); 
-  // padding-left: calc(100vw - 100%);
+  display: flex;
+  justify-content: center;
+  
 }
 .inputBox{
   width:30px;
@@ -203,9 +201,11 @@ $citicRed:rgb(216, 31, 47);
   display: inline;
 }
 .config-table{
-  margin:0 auto;
-  
+  display:flex;
+  align-items: center;
+  justify-content: center;
 }
+
 
 
 

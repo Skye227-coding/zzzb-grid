@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <p>Custom tabel</p>
-    <div >
-      <table class="zzzb-table config-table">
+  <div class="outer-container">
+    <p>Custom table</p>
+    <div class="config-table">
+      <table class="zzzb-table">
         <tr v-for="(item,index) in zzzbTableConfig" :key="index">
           <td class="zzzb-row-header">
             {{item.Name}}

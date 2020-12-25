@@ -416,6 +416,7 @@ export default {
     // 这个要配合watch来兼听监听checkbox内选中的值的变化
     changeAllChecked(prop) {
       if (this.selectAll == true) {
+        // 这里checkedValue是数组，distinctProp是set要转换
         this.checkedValue = Array.from(this.distinctProp[prop]);
         console.log("checkedValue:", this.checkedValue)
       }
