@@ -233,10 +233,13 @@ export default {
     //   deep:true
     // },
     checkedValue:function(){
-      if(this.checkedValue.size==this.distinctNum){
+      console.log("size:",this.checkedValue.length);
+      console.log("distinct:",this.distinctNum);
+      console.log("type;",typeof this.checkedValue);
+      if(this.checkedValue.length==this.distinctNum){
         this.selectAll=true;
         
-      }else if(this.checkedValue.size!=0&&this.checkedValue.size!=this.distinctNum){
+      }else if(this.checkedValue.length!=0&&this.checkedValue.length!=this.distinctNum){
         // console.log("checkedValue watch!");
         this.selectAll=false;
         this.cancleAll=false;
@@ -264,6 +267,11 @@ export default {
          })
          console.log("更新了表格！");
          console.log(this.optionConfig);
+      }
+    },
+    selectAll:function(){
+      if(this.selectAll==true){
+        console.log("selectall监听：",this.checkedValue);
       }
     }
   },
@@ -371,6 +379,8 @@ export default {
       if (this.cancleAll != true && this.selectAll != true && this.checkedValue.length != 0) {
         // var values = Object.values(this.optionData);
         // console.log(values);
+        console.log("optionInput:",this.optionInput);
+        console.log("checked:",this.checkedValue);
         var filterData = this.optionInput.filter((currentValue) =>
           this.checkedValue.includes(currentValue[prop])
         )
@@ -406,13 +416,14 @@ export default {
     // 这个要配合watch来兼听监听checkbox内选中的值的变化
     changeAllChecked(prop) {
       if (this.selectAll == true) {
-        this.checkedValue = this.distinctProp[prop];
+        this.checkedValue = Array.from(this.distinctProp[prop]);
         console.log("checkedValue:", this.checkedValue)
       }
     },
     cancleAllChecked() {
       if (this.cancleAll == true) {
         this.checkedValue = [];
+        this.selectAll=false;
       }
       
     },
