@@ -141,9 +141,9 @@
           @keydown.up="changeFocus($event,Rid,Cid,'38')"
           @keydown.right="changeFocus($event,Rid,Cid,'39')"
           @keydown.down="changeFocus($event,Rid,Cid,'40')"
-          >
+          @keydown="editIt($event,Rid,Cid)">
           <i v-if="obj[colHeader.Prop] === undefined" disabled="true" class="el-icon-remove-outline"></i>
-          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Input'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid"  ></zzzb-input>
+          <zzzb-input size="mini" v-else-if="colHeader.Type == 'Input'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
           <zzzb-input size="mini" v-else-if="colHeader.Type == 'NumberInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid"  ></zzzb-input>
           <zzzb-input size="mini" v-else-if="colHeader.Type == 'ThousandthInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
           <zzzb-input size="mini" v-else-if="colHeader.Type == 'Underlying'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid"  ></zzzb-input>
@@ -202,7 +202,9 @@ export default {
       selectAll: false,
       cancleAll: false,
       distinctNum: 0,
-      location:{'row':'','col':''}
+      location:{'row':'','col':''},
+      outerFocus:false,
+      innerFocus:false,
     }
   },
   mounted() {
@@ -552,10 +554,44 @@ export default {
         objAfter=document.getElementById(tableId).rows[row].cells[col+1];
       }
       objAfter.focus();
+      this.outerFocus=true;
       // ev.preventDefault();
       
       
     },
+    editIt(event,row,col){
+        console.log("进入了编辑函数！")
+        console.log("event:",event);
+        console.log("key:",event.keyCode);
+        if(event.keyCode<37||event.keyCode>40){
+          var tableId;
+          if(this.direction=='1'){
+            tableId='vertical-table'; 
+          }else{
+          tableId='hor-table';
+          }
+          var objCurrent;
+          if(this.direction=='1'){
+            objCurrent=document.getElementById(tableId).rows[row+1].cells[col];
+          }else{
+            objCurrent=document.getElementById(tableId).rows[row].cells[col+1];
+          }
+          var innerObj=objCurrent.getElementsByClassName("zzzb-input__inner")[0];
+          var event1=new Event('focus',{
+            bubbles:true,
+            cancelable:true
+          });
+          innerObj.dispatchEvent(event1);
+
+        }
+        
+        
+        
+
+
+      }
+   
+
   },
 }
 </script>

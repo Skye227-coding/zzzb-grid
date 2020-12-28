@@ -7,6 +7,7 @@
       @focus="selectAll" 
       @keydown.enter="saveChange"
       @keyup.esc="exitEdit"
+      
       />
 
     <!-- <input class="el-input__inner" v-bind:value="formatValue" :readonly="readonly" ref="input" v-on:input="updatevalue($event.target.value)" v-on:blur="onBlur" v-on:focus="selectAll" /> -->
@@ -155,7 +156,11 @@ export default {
       this.updatevalue(this.value);
       this.$refs.input.blur();
      
-    }
+    },
+    // editIt(){
+    //   this.$refs.input.focus();
+    //   console.log("触发了编辑功能！");
+    // }
     // dispatch(componentName, eventName, params) {
     //   var parent = this.$parent || this.$root
     //   var name = parent.$options.componentName

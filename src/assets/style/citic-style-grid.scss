@@ -116,6 +116,7 @@ $citicRed:rgb(216, 31, 47);
  .zzzb-popper .el-select-dropdown__list {
   padding: 0px;
 
+
 }
 
  .zzzb-popper .el-select-dropdown__item {
@@ -125,6 +126,8 @@ $citicRed:rgb(216, 31, 47);
   font-size: 12px;
   text-align: center;
   left:0px !important;
+  height:20px;
+  margin-top:0px;
 }
 
  .zzzb-popper .el-select-dropdown__item.hover,
@@ -179,6 +182,11 @@ $citicRed:rgb(216, 31, 47);
 }
 .el-select-dropdown__item{
   list-style: none;
+  border:1px solid white;
+}
+.el-select-dropdown__list{
+  margin-top: 0px;
+  border:1px solid white;
 }
 .mytable{
   // display: flex;

@@ -175,7 +175,11 @@ export default {
       ]
       ,
       zzzbTableConfig: [
-        { Prop: 'TradeID', Name: '交易编号', Type: 'Input', ReadOnly: true, GroupOrder: 1, FieldOrder: 22 ,Sortable:false,FilterAddon:false},
+        { Prop: 'TradeID', Name: '交易编号', Type: 'Input', ReadOnly: true, GroupOrder: 1, FieldOrder: 22 ,Sortable:false,FilterAddon:false,
+            Threshold:{'=':{data:0,bgcolor:'black',fontcolor:'white'},
+                       '>':{data:0,bgcolor:'green',fontcolor:'blue'},
+                       '<':{data:0,bgcolor:'red',fontcolor:'yellow'}}},
+
         { Prop: 'LegID', Name: '腿编号', Type: 'Input', ReadOnly: true, GroupOrder: 1, FieldOrder: 2 ,Sortable:false,FilterAddon:false},
         { Prop: 'Side', Name: '期初开仓方向', Type: 'Select', ReadOnly: true, GroupOrder: 1, FieldOrder: 11, Options: [{ label: '客户买入', value: 'Short' }, { label: '客户卖出', value: 'Long' }] ,Sortable:false,FilterAddon:false},
         { Prop: 'CallPut', Name: '期权类型', Type: 'Select', ReadOnly: true, GroupOrder: 1, FieldOrder: 12, Options: [{ label: 'Call', value: 'Call' }, { label: 'Put', value: 'Put' }] ,Sortable:false,FilterAddon:false},
