@@ -1,7 +1,13 @@
 <template>
   <div class="zzzb-input">
     <input v-if="readonly" class="zzzb-input__inner" v-bind:value="formatValue" :readonly="readonly" ref="input" v-on:input="updatevalue($event.target.value)" />
-    <input v-else class="zzzb-input__inner" v-bind:value="formatValue" :readonly="readonly" ref="input" v-on:input="updatevalue($event.target.value)" @blur="onBlur" @focus="selectAll" />
+    <input v-else class="zzzb-input__inner" v-bind:value="formatValue" :readonly="readonly" ref="input" 
+      v-on:input="updatevalue($event.target.value)" 
+      @blur="onBlur" 
+      @focus="selectAll" 
+      @keydown.enter="saveChange"
+      @keyup.esc="exitEdit"
+      />
 
     <!-- <input class="el-input__inner" v-bind:value="formatValue" :readonly="readonly" ref="input" v-on:input="updatevalue($event.target.value)" v-on:blur="onBlur" v-on:focus="selectAll" /> -->
   </div>
@@ -41,16 +47,15 @@ export default {
   },
   data() {
     return {
-      focused: false
+      focused: false,
+      save:false,
+      tempValue:'',
     }
   },
-  // created() {
-  //   this.viewValue = this.value
-  // },
+  
   computed: {
+    // this.value是从父组件传过来的的value属性
     formatValue() {
-      // console.log("value before :",this.value);
-      // console.log('formatValue', this.focused);
       if (this.value === '')
        { return this.value }
       // 焦点在这就返回原始值
@@ -76,9 +81,6 @@ export default {
           data = this.symbol + data + this.symbolUnit
           // console.log("symbol")
         }
-        // console.log("format value type: ",typeof this.value)
-        // console.log("value in else: ",data);
-        
         return data
       }
       
@@ -118,17 +120,19 @@ export default {
       return value
     },
     updatevalue(value) {
-      console.log("更新了数据！");
-      // console.log('Update: ' + value)
-      // var formatvalue = this.formatValue(value)
-      this.$emit('input', value)
+        console.log("更新了数据！");
+        console.log(value);
+        console.log("save:",this.save);
+        if(this.save==true){
+          this.$emit('input', value);
+        }
+        
     },
+    // 焦点移出输入框时标记this.focused
     onBlur() {
-      // console.log('On blur')
       this.focused = false
-      // this.$emit('blur')
-      // this.dispatch('ElFormItem', 'el.form.blur', [this.value])
     },
+    // 焦点聚焦在输入框标记this.focused
     selectAll(event) {
 
       this.focused = true
@@ -137,6 +141,22 @@ export default {
         event.target.select()
       }, 10)
     },
+    // 保存输入的数据
+    saveChange(){
+      this.save=true;
+      this.updatevalue(event.target.value);
+      this.save=false;
+      this.$refs.input.blur();
+      
+    },
+    // 退出编辑，返回原值
+    exitEdit(){
+      this.save=false;
+      this.updatevalue(this.value);
+      // console.log("value变成了：",this.value)
+      this.$refs.input.blur();
+     
+    }
     // dispatch(componentName, eventName, params) {
     //   var parent = this.$parent || this.$root
     //   var name = parent.$options.componentName

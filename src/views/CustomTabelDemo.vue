@@ -38,7 +38,7 @@
     <div>
      <button @click="ClickDD">转置</button>
     </div>
-    <div class="table-comp">
+    <div>
       <zzzb-grid :colHeaders='zzzbTableConfig' :data='customData' :direction='tableDirection' :reset='reset'></zzzb-grid>
     </div>
   </div>

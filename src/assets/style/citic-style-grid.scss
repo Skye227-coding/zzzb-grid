@@ -180,15 +180,11 @@ $citicRed:rgb(216, 31, 47);
 .el-select-dropdown__item{
   list-style: none;
 }
-.table-comp{
-    position: absolute;
-    margin: auto;
-   
-
-}
 .mytable{
-  display: flex;
-  justify-content: center;
+  // display: flex;
+  // justify-content: center;
+  width:95%;
+  margin:0 auto;
   
 }
 .inputBox{
