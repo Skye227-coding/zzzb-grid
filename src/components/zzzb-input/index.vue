@@ -153,7 +153,6 @@ export default {
     exitEdit(){
       this.save=false;
       this.updatevalue(this.value);
-      // console.log("value变成了：",this.value)
       this.$refs.input.blur();
      
     }
