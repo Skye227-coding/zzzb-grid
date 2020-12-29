@@ -157,23 +157,7 @@ export default {
       this.$refs.input.blur();
      
     },
-    // editIt(){
-    //   this.$refs.input.focus();
-    //   console.log("触发了编辑功能！");
-    // }
-    // dispatch(componentName, eventName, params) {
-    //   var parent = this.$parent || this.$root
-    //   var name = parent.$options.componentName
-    //   while (parent && (!name || name !== componentName)) {
-    //     parent = parent.$parent
-    //     if (parent) {
-    //       name = parent.$options.componentName
-    //     }
-    //   }
-    //   if (parent) {
-    //     parent.$emit.apply(parent, [eventName].concat(params))
-    //   }
-    // }
+    
   }
 }
 </script>

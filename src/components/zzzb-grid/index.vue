@@ -143,6 +143,7 @@
           @keydown.down="changeFocus($event,Rid,Cid,'40')"
           @keydown="editIt($event,Rid,Cid)">
           <i v-if="obj[colHeader.Prop] === undefined" disabled="true" class="el-icon-remove-outline"></i>
+          <!-- :style="styleObj(Rid,Cid,obj[colHeader.Prop],colHeader.Threshold)" -->
           <zzzb-input size="mini" v-else-if="colHeader.Type == 'Input'" v-model="obj[colHeader.Prop]" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
           <zzzb-input size="mini" v-else-if="colHeader.Type == 'NumberInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid"  ></zzzb-input>
           <zzzb-input size="mini" v-else-if="colHeader.Type == 'ThousandthInput'" v-model="obj[colHeader.Prop]" :type="colHeader.Type" :fixed="colHeader.Fixed" :symbol="colHeader.Symbol" :symbolUnit="colHeader.SymbolUnit" :readonly="colHeader.ReadOnly" :ref="'input_'+Rid+'_'+Cid" ></zzzb-input>
@@ -260,6 +261,25 @@ export default {
     }
   },
   computed:{
+    styleObj(row,col,value,threshold){
+      var color;
+      var bgcolor;
+      console.log(threshold);
+      // Threshold:{'=':{data:5,bgcolor:'black',fontcolor:'white'},
+      //            '>':{data:5,bgcolor:'green',fontcolor:'blue'},
+      //            '<':{data:5,bgcolor:'red',fontcolor:'yellow'}}},
+      if(value==threshold['=']['data']){
+        color=threshold['=']['fontcolor'];
+        bgcolor=threshold['=']['bgcolor'];
+      }else if(value>threshold['>']['data']){
+        color=threshold['>']['fontcolor'];
+        bgcolor=threshold['>']['bgcolor'];
+      }else if(value<threshold['<']['data']){
+         color=threshold['<']['fontcolor'];
+         bgcolor=threshold['<']['bgcolor'];
+      }
+      return {color:color,backgroundcolor:bgcolor};
+    }
 
   },
   methods: {
@@ -555,6 +575,7 @@ export default {
       }
       objAfter.focus();
       this.outerFocus=true;
+      this.innerFocus=false;
       // ev.preventDefault();
       
       
@@ -563,26 +584,30 @@ export default {
         console.log("进入了编辑函数！")
         console.log("event:",event);
         console.log("key:",event.keyCode);
+        // 为当前外部聚焦的单元格进行内部聚焦
         if(event.keyCode<37||event.keyCode>40){
-          var tableId;
-          if(this.direction=='1'){
+          if(this.innerFocus!=true){
+            var tableId;
+            if(this.direction=='1'){
             tableId='vertical-table'; 
-          }else{
-          tableId='hor-table';
+            }else{
+              tableId='hor-table';
+            }
+            var objCurrent;
+            if(this.direction=='1'){
+              objCurrent=document.getElementById(tableId).rows[row+1].cells[col];
+            }else{
+              objCurrent=document.getElementById(tableId).rows[row].cells[col+1];
+           }
+            var innerObj=objCurrent.getElementsByClassName("zzzb-input__inner")[0];
+            var event1=new Event('focus',{
+              bubbles:true,
+              cancelable:true
+            });
+            innerObj.dispatchEvent(event1);
+            this.innerFocus=true;
           }
-          var objCurrent;
-          if(this.direction=='1'){
-            objCurrent=document.getElementById(tableId).rows[row+1].cells[col];
-          }else{
-            objCurrent=document.getElementById(tableId).rows[row].cells[col+1];
-          }
-          var innerObj=objCurrent.getElementsByClassName("zzzb-input__inner")[0];
-          var event1=new Event('focus',{
-            bubbles:true,
-            cancelable:true
-          });
-          innerObj.dispatchEvent(event1);
-
+         
         }
         
         
