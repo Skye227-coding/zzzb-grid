@@ -1,6 +1,6 @@
 <template>
   <div class="mytable">
-    <table v-if="direction=='0'" border="0" cellspacing="0" class="zzzb-table" id="hor-table">
+    <table v-show="direction=='0'" border="0" cellspacing="0" class="zzzb-table" id="hor-table" ref="horTable">
       <!-- 这里是表头在第一列的表-->
       <tr v-for="(colHeader, Rid) in optionConfig" :key="Rid + '_row'">
         <td class="zzzb-row-header">
@@ -83,7 +83,7 @@
       </tr>
     </table>
     <!-- 这里是表头在行的展示方式 -->
-    <table v-else border="0" cellspacing="0" class="zzzb-table" id="vertical-table">
+    <table v-show="direction=='1'" border="0" cellspacing="0" class="zzzb-table" id="vertical-table" ref="verticalTable">
       <tr class="zzzb-row-header">
         <td class="inline-row" v-for="(colHeader, id) in optionConfig" :key="id + '_column'">
           <div>
@@ -208,8 +208,15 @@ export default {
       innerFocus:false,
     }
   },
+  // created(){
+  //   this.refresh()
+  // },
   mounted() {
-    this.refresh()
+    this.refresh();
+    // this.renderStyle()
+  },
+  updated(){
+    this.renderStyle();
   },
   watch: {
     colHeaders(newValue) {
@@ -261,25 +268,25 @@ export default {
     }
   },
   computed:{
-    styleObj(row,col,value,threshold){
-      var color;
-      var bgcolor;
-      console.log(threshold);
-      // Threshold:{'=':{data:5,bgcolor:'black',fontcolor:'white'},
-      //            '>':{data:5,bgcolor:'green',fontcolor:'blue'},
-      //            '<':{data:5,bgcolor:'red',fontcolor:'yellow'}}},
-      if(value==threshold['=']['data']){
-        color=threshold['=']['fontcolor'];
-        bgcolor=threshold['=']['bgcolor'];
-      }else if(value>threshold['>']['data']){
-        color=threshold['>']['fontcolor'];
-        bgcolor=threshold['>']['bgcolor'];
-      }else if(value<threshold['<']['data']){
-         color=threshold['<']['fontcolor'];
-         bgcolor=threshold['<']['bgcolor'];
-      }
-      return {color:color,backgroundcolor:bgcolor};
-    }
+    // styleObj(row,col,value,threshold){
+    //   var color;
+    //   var bgcolor;
+    //   console.log(threshold);
+    //   // Threshold:{'=':{data:5,bgcolor:'black',fontcolor:'white'},
+    //   //            '>':{data:5,bgcolor:'green',fontcolor:'blue'},
+    //   //            '<':{data:5,bgcolor:'red',fontcolor:'yellow'}}},
+    //   if(value==threshold['=']['data']){
+    //     color=threshold['=']['fontcolor'];
+    //     bgcolor=threshold['=']['bgcolor'];
+    //   }else if(value>threshold['>']['data']){
+    //     color=threshold['>']['fontcolor'];
+    //     bgcolor=threshold['>']['bgcolor'];
+    //   }else if(value<threshold['<']['data']){
+    //      color=threshold['<']['fontcolor'];
+    //      bgcolor=threshold['<']['bgcolor'];
+    //   }
+    //   return {color:color,backgroundcolor:bgcolor};
+    // }
 
   },
   methods: {
@@ -321,6 +328,7 @@ export default {
       }
       this.setFilterShow();
       this.setSortShow();
+      // this.renderStyle();
       // console.log('排序', this.colHeadersSorted)
     },
     sortColumnData(sortKey, options) {
@@ -581,39 +589,79 @@ export default {
       
     },
     editIt(event,row,col){
-        console.log("进入了编辑函数！")
-        console.log("event:",event);
-        console.log("key:",event.keyCode);
+      console.log("进入了编辑函数！")
+      console.log("event:",event);
+      console.log("key:",event.keyCode);
         // 为当前外部聚焦的单元格进行内部聚焦
-        if(event.keyCode<37||event.keyCode>40){
-          if(this.innerFocus!=true){
-            var tableId;
-            if(this.direction=='1'){
+      if(event.keyCode<37||event.keyCode>40){
+        if(this.innerFocus!=true){
+          var tableId;
+          if(this.direction=='1'){
             tableId='vertical-table'; 
-            }else{
-              tableId='hor-table';
-            }
-            var objCurrent;
-            if(this.direction=='1'){
-              objCurrent=document.getElementById(tableId).rows[row+1].cells[col];
-            }else{
-              objCurrent=document.getElementById(tableId).rows[row].cells[col+1];
-           }
-            var innerObj=objCurrent.getElementsByClassName("zzzb-input__inner")[0];
-            var event1=new Event('focus',{
-              bubbles:true,
-              cancelable:true
-            });
-            innerObj.dispatchEvent(event1);
-            this.innerFocus=true;
+          }else{
+            tableId='hor-table';
           }
-         
+          var objCurrent;
+          if(this.direction=='1'){
+            objCurrent=document.getElementById(tableId).rows[row+1].cells[col];
+          }else{
+            objCurrent=document.getElementById(tableId).rows[row].cells[col+1];
+          }
+          console.log("其他函数里面的表格：",document.getElementById(tableId))
+          var innerObj=objCurrent.getElementsByClassName("zzzb-input__inner")[0];
+          var event1=new Event('focus',{
+            bubbles:true,
+            cancelable:true
+          });
+          innerObj.dispatchEvent(event1);
+          this.innerFocus=true;
+          }
         }
+      },
+      renderStyle(){
         
-        
-        
-
-
+        var tableId;
+        if(this.direction=='1'){
+          tableId='verticalTable'; 
+        }else{
+          tableId='horTable';
+        }
+        // console.log(document.getElementById(tableId));
+        var objCurrent;
+        // 垂直表数据行排列 Row col和 源数据一致
+        // 水平表数据排列 row col和 源数据相反
+        for(let row in this.optionInput){
+          let rowdata=this.optionInput[row];
+          for(let col in this.optionConfig){
+            let rowconfig=this.optionConfig[col];
+            if(rowconfig.Threshold!=undefined){
+              console.log("这个属性有阈值！");
+              console.log(this.$refs[tableId].rows[1].cells[3]);
+              row=parseInt(row);
+              col=parseInt(col);
+              if(this.direction=='1'){  console.log(typeof row)
+                row=row+1;
+              }else{
+                col=col+1
+              }
+              objCurrent=this.$refs[tableId].rows[row].cells[col].getElementsByClassName("zzzb-input__inner")[0];
+              if(rowdata[rowconfig.Prop]==rowconfig.Threshold['=']['data']){ 
+                console.log("相等");
+                objCurrent.style.color=rowconfig.Threshold['=']['fontcolor'];
+                objCurrent.style.backgroundColor=rowconfig.Threshold['=']['bgcolor'];
+              }else if(rowdata[rowconfig.Prop]>rowconfig.Threshold['=']['data']){
+                console.log("大于");
+                objCurrent.style.color=rowconfig.Threshold['>']['fontcolor'];
+                objCurrent.style.backgroundColor=rowconfig.Threshold['>']['bgcolor'];
+              }else if(rowdata[rowconfig.Prop]<rowconfig.Threshold['=']['data']){
+                console.log("小于")
+                objCurrent.style.color=rowconfig.Threshold['<']['fontcolor'];
+                objCurrent.style.backgroundColor=rowconfig.Threshold['<']['bgcolor'];
+              }
+              
+            }
+          }
+        }
       }
    
 
