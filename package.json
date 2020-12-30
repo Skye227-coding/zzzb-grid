@@ -1,6 +1,6 @@
 {
   "name": "zzzb-grid",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "Skye Liu",
   "scripts": {
     "serve": "vue-cli-service serve",
