@@ -147,3 +147,35 @@ $heght: 25px;
   width:150px;
   border:1px solid black;
 }
+.el-input__suffix,.el-select__caret,.el-icon-arrow-up{
+  display: none;
+}
+.el-select-dropdown__item{
+  list-style: none;
+  border:1px solid white;
+}
+.el-select-dropdown__list{
+  margin-top: 0px;
+  border:1px solid white;
+}
+.mytable{
+  // display: flex;
+  // justify-content: center;
+  width:95%;
+  margin:0 auto;
+  
+}
+.inputBox{
+  width:30px;
+  display: inline;
+  text-align: center;
+}
+
+.box-inner{
+  display: inline;
+}
+.config-table{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
